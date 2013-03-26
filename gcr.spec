@@ -1,11 +1,11 @@
 Summary:	GObject and GUI library for high level crypto parsing and display
 Name:		gcr
-Version:	3.6.2
+Version:	3.8.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gcr/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	b31d8b95c77333cd49e6eaa5abd93e50
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gcr/3.8/%{name}-%{version}.tar.xz
+# Source0-md5:	20718f7ec668aeddd89707c1e7e65432
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -62,6 +62,9 @@ API and gck documentation for gcr library.
 
 %prep
 %setup -q
+# disable coverage support
+%{__sed} -i "/GNOME_CODE_COVERAGE/d" configure.ac
+%{__sed} -i "/@GNOME_CODE_COVERAGE_RULES@/d" Makefile.decl
 
 %build
 %{__intltoolize}
@@ -83,8 +86,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libmock-test-module.*
 
 %find_lang %{name}
 
@@ -112,8 +113,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libexecdir}
 %attr(755,root,root) %{_bindir}/gcr-viewer
 %attr(755,root,root) %{_libexecdir}/gcr-prompter
-%{_datadir}/GConf/gsettings/org.gnome.crypto.pgp.convert
-%{_datadir}/GConf/gsettings/org.gnome.crypto.pgp_keyservers.convert
 %{_datadir}/dbus-1/services/org.gnome.keyring.PrivatePrompter.service
 %{_datadir}/dbus-1/services/org.gnome.keyring.SystemPrompter.service
 %{_datadir}/gcr-3
@@ -129,18 +128,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libgck-1.so.?
 %attr(755,root,root) %ghost %{_libdir}/libgcr-3.so.?
 %attr(755,root,root) %ghost %{_libdir}/libgcr-base-3.so.?
+%attr(755,root,root) %ghost %{_libdir}/libgcr-ui-3.so.1
 %attr(755,root,root) %{_libdir}/libgck-1.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgcr-3.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgcr-base-3.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgcr-ui-3.so.*.*.*
 %{_libdir}/girepository-1.0/Gck-1.typelib
 %{_libdir}/girepository-1.0/Gcr-3.typelib
+%{_libdir}/girepository-1.0/GcrUi-3.typelib
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
 %{_datadir}/gir-1.0/Gck-1.gir
 %{_datadir}/gir-1.0/Gcr-3.gir
+%{_datadir}/gir-1.0/GcrUi-3.gir
 %{_includedir}/gck-1
 %{_includedir}/gcr-3
 %{_pkgconfigdir}/*.pc
