@@ -1,18 +1,18 @@
 Summary:	GObject and GUI library for high level crypto parsing and display
 Name:		gcr
-Version:	3.8.2
+Version:	3.10.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gcr/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	f5e66afcab19897a0de0590735329fb1
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gcr/3.10/%{name}-%{version}.tar.xz
+# Source0-md5:	525962cc88e21a50040abff6bb92cd11
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnupg
-BuildRequires:	gobject-introspection-devel
-BuildRequires:	gtk+3-devel
+BuildRequires:	gobject-introspection-devel >= 1.38.0
+BuildRequires:	gtk+3-devel >= 3.10.0
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
 BuildRequires:	libgcrypt-devel
@@ -20,6 +20,7 @@ BuildRequires:	libtasn1-devel
 BuildRequires:	libtool
 BuildRequires:	p11-kit-devel
 BuildRequires:	pkg-config
+BuildRequires:	vala-vapigen
 Requires:	%{name}-libs = %{version}-%{release}
 Requires(post,postun):	glib-gio-gsettings
 Requires(post,postun):	gtk+-update-icon-cache
@@ -146,6 +147,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/gck-1
 %{_includedir}/gcr-3
 %{_pkgconfigdir}/*.pc
+%{_datadir}/vala/vapi/*.deps
+%{_datadir}/vala/vapi/*.vapi
+
 
 %files apidocs
 %defattr(644,root,root,755)
