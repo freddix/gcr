@@ -1,11 +1,11 @@
 Summary:	GObject and GUI library for high level crypto parsing and display
 Name:		gcr
-Version:	3.10.1
-Release:	2
+Version:	3.12.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gcr/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	68c0b5d7202ac598942616d2e3a1b089
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gcr/3.12/%{name}-%{version}.tar.xz
+# Source0-md5:	e3f729d63b9b53ef99b5c19958bfb6c8
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -65,7 +65,6 @@ API and gck documentation for gcr library.
 %setup -q
 # disable coverage support
 %{__sed} -i "/GNOME_CODE_COVERAGE/d" configure.ac
-%{__sed} -i "/@GNOME_CODE_COVERAGE_RULES@/d" Makefile.decl
 
 %build
 %{__intltoolize}
@@ -87,6 +86,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/GConf
 
 %find_lang %{name}
 
